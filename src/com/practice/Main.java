@@ -25,43 +25,50 @@ public class Main {
 
     public static void main(String[] args) {
 
-        if(args[0].compareTo("help") == 0 ||
-        args.length != 3) {
-            var usageMessage = "   [0] - latestPath \n" +
-                    "   [1] - copyLocation\n" +
-                    "   [2] - configFilePath";
+        var usageMessage = " TOPP App CI/CD Dev Tool Usage:\n" +
+                "   [0] - latestPath \n" +
+                "   [1] - copyLocation\n" +
+                "   [2] - configFilePath";
 
-            System.out.println(" TOPP App CI/CD Dev Tool Usage:\n" + usageMessage);
+        try {
 
-        } else {
-            var latestPath = args[0];
-            var copyLocation = args[1];
-            var configFilePath = args[2];
+            if (args[0].compareTo("help") == 0 ||
+                    args.length != 3) {
 
-            System.out.println(" Copying File - " + latestPath + " to - " + copyLocation);
+                System.out.println(usageMessage);
 
-            try (var latestFile = new FileInputStream(latestPath);
-                 var copy = new FileOutputStream(copyLocation);
-                 var configFile = new FileOutputStream(configFilePath)) {
+            } else {
+                var latestPath = args[0];
+                var copyLocation = args[1];
+                var configFilePath = args[2];
 
-                var commandOne = (int) '0';
-                var commandTwo = (int) '0';
-                int byteRead;
+                System.out.println(" Copying File - " + latestPath + " to - " + copyLocation);
 
-                do {
-                    byteRead = latestFile.read();
+                try (var latestFile = new FileInputStream(latestPath);
+                     var copy = new FileOutputStream(copyLocation);
+                     var configFile = new FileOutputStream(configFilePath)) {
 
-                    if (byteRead != -1) {
-                        copy.write(byteRead);
-                    }
+                    var commandOne = (int) '0';
+                    var commandTwo = (int) '0';
+                    int byteRead;
 
-                } while (byteRead != -1);
+                    do {
+                        byteRead = latestFile.read();
 
-                configFile.write(commandOne);
-                configFile.write(commandTwo);
-            } catch (IOException ignore) {
-                System.out.println(" ERROR: Could Not Copy File");
+                        if (byteRead != -1) {
+                            copy.write(byteRead);
+                        }
+
+                    } while (byteRead != -1);
+
+                    configFile.write(commandOne);
+                    configFile.write(commandTwo);
+                } catch (IOException ignore) {
+                    System.out.println(" ERROR: Could Not Copy File");
+                }
             }
+        } catch(ArrayIndexOutOfBoundsException ignore) {
+            System.out.println(usageMessage);
         }
     }
 }
