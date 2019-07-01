@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="toppAppDevTool:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/toppAppDevTool_jar</output-path>
+    <root id="archive" name="toppAppDevTool.jar">
+      <element id="module-output" name="toppAppDevTool" />
+    </root>
+  </artifact>
+</component>
