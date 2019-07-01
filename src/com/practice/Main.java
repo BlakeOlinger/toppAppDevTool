@@ -24,33 +24,44 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) {
-        var latestPath = args[0];
-        var copyLocation = args[1];
-        var configFilePath = args[2];
 
-        System.out.println(" Copying File - " + latestPath + " to - " + copyLocation);
+        if(args[0].compareTo("help") == 0 ||
+        args.length != 3) {
+            var usageMessage = "   [0] - latestPath \n" +
+                    "   [1] - copyLocation\n" +
+                    "   [2] - configFilePath";
 
-        try (var latestFile = new FileInputStream(latestPath);
-        var copy = new FileOutputStream(copyLocation);
-        var configFile = new FileOutputStream(configFilePath)) {
+            System.out.println(" TOPP App CI/CD Dev Tool Usage:\n" + usageMessage);
 
-            var commandOne = (int) '0';
-            var commandTwo = (int) '0';
-            int byteRead;
+        } else {
+            var latestPath = args[0];
+            var copyLocation = args[1];
+            var configFilePath = args[2];
 
-            do {
-                byteRead = latestFile.read();
+            System.out.println(" Copying File - " + latestPath + " to - " + copyLocation);
 
-                if (byteRead != -1) {
-                    copy.write(byteRead);
-                }
+            try (var latestFile = new FileInputStream(latestPath);
+                 var copy = new FileOutputStream(copyLocation);
+                 var configFile = new FileOutputStream(configFilePath)) {
 
-            } while (byteRead != -1);
+                var commandOne = (int) '0';
+                var commandTwo = (int) '0';
+                int byteRead;
 
-            configFile.write(commandOne);
-            configFile.write(commandTwo);
-        } catch (IOException ignore) {
-            System.out.println(" ERROR: Could Not Copy File");
+                do {
+                    byteRead = latestFile.read();
+
+                    if (byteRead != -1) {
+                        copy.write(byteRead);
+                    }
+
+                } while (byteRead != -1);
+
+                configFile.write(commandOne);
+                configFile.write(commandTwo);
+            } catch (IOException ignore) {
+                System.out.println(" ERROR: Could Not Copy File");
+            }
         }
     }
 }
