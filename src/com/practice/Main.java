@@ -15,8 +15,9 @@ command line args -
     [4] - file name for git-add <untrackedFile>
  */
 
+// TODO - make simple GUI
+
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -34,8 +35,20 @@ public class Main {
         var configFile = new FileOutputStream(configFilePath)) {
 
             var commandOne = (int) '0';
-            var commandTwo = (int) '1';
+            var commandTwo = (int) '0';
+            int byteRead;
 
+            do {
+                byteRead = latestFile.read();
+
+                if (byteRead != -1) {
+                    copy.write(byteRead);
+                }
+
+            } while (byteRead != -1);
+
+            configFile.write(commandOne);
+            configFile.write(commandTwo);
         } catch (IOException ignore) {
             System.out.println(" ERROR: Could Not Copy File");
         }
